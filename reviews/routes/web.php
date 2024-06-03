@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,8 +25,7 @@ require __DIR__ . '/auth.php';
 Route::middleware(['auth', 'userMiddleware'])->group(function () {
     Route::get('dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('order', [UserController::class, 'order'])->name('user.order');
-    Route::get('favorite', [UserController::class, 'favorite'])->name('user.favorite');
-    Route::get('profile/edit', [UserController::class, 'profile'])->name('user.profile.edit');
+    Route::get('favorite', [FavoriteController::class, 'favorite'])->name('user.favorite');
 });
 
 //admin
@@ -33,3 +35,9 @@ Route::middleware(['auth', 'adminMiddleware'])->group(function () {
     Route::get('/admin/category', [AdminController::class, 'category'])->name('admin.category');
     Route::get('/admin/user', [AdminController::class, 'user'])->name('admin.user');
 });
+Route::resource('books', BookController::class)
+    ->only(['index', 'show']);
+
+Route::resource('books.reviews', ReviewController::class)
+
+    ->only(['create', 'store', 'destroy']);
