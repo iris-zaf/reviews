@@ -49,5 +49,6 @@
         "SESSION_ENCRYPT": "false",
 
         "VITE_APP_NAME": "${APP_NAME}"
-    }
+    },
+    "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
