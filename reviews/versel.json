@@ -4,7 +4,12 @@
     "functions": {
         "api/index.php": { "runtime": "vercel-php@0.3.1" }
     },
+    "outputDirectory": "public",
     "routes": [
+        {
+            "src": "/build/(.*)",
+            "dest": "/build/$1"
+        },
         {
             "src": "/(.*)",
             "dest": "/api/index.php"
@@ -46,9 +51,6 @@
         " DB_USERNAME": "root",
         " DB_PASSWORD": "4499",
         "SESSION_LIFETIME": "120",
-        "SESSION_ENCRYPT": "false",
-
-        "VITE_APP_NAME": "${APP_NAME}"
-    },
-    "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+        "SESSION_ENCRYPT": "false"
+    }
 }
