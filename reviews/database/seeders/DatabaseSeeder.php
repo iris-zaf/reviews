@@ -1,11 +1,8 @@
 <?php
 
-namespace Database\Seeders;
-
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Review;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,34 +12,43 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        // Create or retrieve a user for seeding
+        $user = User::firstOrCreate([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
 
-        //book review based on critic
-        Book::factory(33)->create()->each(function ($book) {
-            $numReviews = random_int(5, 30);
-            Review::factory()->count($numReviews)
-                ->good()
-                ->for($book)
-                ->create();
+        // Seed books with good reviews
+        Book::factory(33)->create()->each(function ($book) use ($user) {
+            $this->seedReviews($book, $user, 'good');
         });
-        Book::factory(33)->create()->each(function ($book) {
-            $numReviews = random_int(5, 30);
-            Review::factory()->count($numReviews)
-                ->average()
-                ->for($book)
-                ->create();
+
+        // Seed books with average reviews
+        Book::factory(33)->create()->each(function ($book) use ($user) {
+            $this->seedReviews($book, $user, 'average');
         });
-        Book::factory(34)->create()->each(function ($book) {
-            $numReviews = random_int(5, 30);
-            Review::factory()->count($numReviews)
-                ->bad()
-                ->for($book)
-                ->create();
+
+        // Seed books with bad reviews
+        Book::factory(34)->create()->each(function ($book) use ($user) {
+            $this->seedReviews($book, $user, 'bad');
         });
+    }
+
+    /**
+     * Seed reviews for a book with a given rating.
+     *
+     * @param Book $book
+     * @param User $user
+     * @param string $rating
+     */
+    private function seedReviews(Book $book, User $user, string $rating): void
+    {
+        $numReviews = random_int(5, 30);
+
+        // Generate reviews based on the rating
+        Review::factory()->count($numReviews)
+            ->$rating()
+            ->for($book)
+            ->create(['user_id' => $user->id]);
     }
 }

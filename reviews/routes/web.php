@@ -40,4 +40,5 @@ Route::resource('books', BookController::class)
 
 Route::resource('books.reviews', ReviewController::class)
 
-    ->only(['create', 'store', 'destroy']);
+    ->only(['create', 'store', 'destroy'])
+    ->middleware(['throttle:reviews']);
