@@ -30,7 +30,10 @@
                     <x-nav-link :href="route('admin.user')" :active="request()->routeIs('admin.user')">
                         {{ __('User') }}
                     </x-nav-link>
-
+                    <!-- Include "Book reviews" link for admin -->
+                    <x-nav-link :href="route('books.index')" :active="request()->routeIs('books.index')">
+                        {{ __('Book reviews') }}
+                    </x-nav-link>
                     @endif
 
                     <!-- user links -->
@@ -38,7 +41,6 @@
                     <x-nav-link :href="route('books.index')" :active="request()->routeIs('books.index')">
                         {{ __('Book reviews') }}
                     </x-nav-link>
-
                     <x-nav-link :href="route('user.favorite')" :active="request()->routeIs('user.favorite')">
                         {{ __('Favorite') }}
                     </x-nav-link>

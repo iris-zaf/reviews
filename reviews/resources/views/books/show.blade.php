@@ -24,9 +24,11 @@
     </div>
 </div>
 <div class="mb-4">
+    @if (Auth::user()->usertype == 'admin')
     <a href="{{ route('books.reviews.create', $book)}}"
         class="inline-block bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Add a
         review</a>
+    @endif
 </div>
 <div>
     <h2 class="mb-4 text-xl font-semibold">Reviews</h2>
@@ -44,6 +46,7 @@
                 </div>
                 <p class="text-gray-700">{{ $review->review }}</p>
                 <div class="flex items-center mt-2">
+                    @if (Auth::user()->usertype == 'admin')
                     <!-- Delete Review Form -->
                     <form action="{{ route('books.reviews.destroy', [$book, $review]) }}" method="POST">
                         @csrf
@@ -51,6 +54,7 @@
                         <button type="submit"
                             class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</button>
                     </form>
+                    @endif
                 </div>
             </div>
         </li>
