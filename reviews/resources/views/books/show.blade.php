@@ -24,11 +24,11 @@
     </div>
 </div>
 <div class="mb-4">
-    @if (Auth::user()->usertype == 'admin')
+
     <a href="{{ route('books.reviews.create', $book)}}"
         class="inline-block bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">Add a
         review</a>
-    @endif
+
 </div>
 <div>
     <h2 class="mb-4 text-xl font-semibold">Reviews</h2>
